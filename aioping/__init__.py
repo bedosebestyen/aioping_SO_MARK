@@ -246,7 +246,7 @@ async def send_one_ping(my_socket, dest_addr, id_, timeout, family):
     await future
 
 
-async def ping(dest_addr, timeout=10, family=None):
+async def ping(dest_addr, mark, timeout=10, family=None):
     """
     Returns either the delay (in seconds) or raises an exception.
     :param dest_addr:
@@ -276,10 +276,11 @@ async def ping(dest_addr, timeout=10, family=None):
         icmp = proto_icmp
     else:
         icmp = proto_icmp6
-
+##################################
     try:
         my_socket = socket.socket(family, socket.SOCK_RAW, icmp)
-
+        my_socket.setsockopt(socket.SOL_SOCKET, socket.SO_MARK, mark)
+        
     except OSError as e:
         if e.errno == 1:
             # Operation not permitted, using SOCK_DGRAM instead:
