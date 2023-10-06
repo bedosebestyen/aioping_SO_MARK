@@ -300,7 +300,7 @@ async def ping(dest_addr, mark, timeout=10, family=None):
     return delay
 
 
-async def verbose_ping(dest_addr, timeout=2, count=3, family=None):
+async def verbose_ping(dest_addr, mark,timeout=2, count=3, family=None):
     """
     Send >count< ping to >dest_addr< with the given >timeout< and display
     the result.
@@ -313,7 +313,7 @@ async def verbose_ping(dest_addr, timeout=2, count=3, family=None):
         delay = None
 
         try:
-            delay = await ping(dest_addr, timeout, family)
+            delay = await ping(dest_addr, mark, timeout, family)
         except TimeoutError as e:
             logger.error("%s timed out after %ss" % (dest_addr, timeout))
         except Exception as e:
@@ -323,3 +323,4 @@ async def verbose_ping(dest_addr, timeout=2, count=3, family=None):
         if delay is not None:
             delay *= 1000
             logger.info("%s get ping in %0.4fms" % (dest_addr, delay))
+            return True
