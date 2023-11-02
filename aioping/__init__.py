@@ -177,7 +177,7 @@ async def receive_one_ping(my_socket, id_, timeout):
                     continue
 
                 if not has_ip_header:  
-                    # When unprivileged on Linux, ICMP ID is rewrited by kernel
+                    # When unprivileged on Linux, ICMP ID is rewritten by kernel
                     # According to https://stackoverflow.com/a/14023878/4528364
                     id_ = int.from_bytes(my_socket.getsockname()[1].to_bytes(2, "big"), "little")
 
